@@ -25,7 +25,8 @@ public class Account extends Caller {
         return perform(createGenerateToken, true, true, "createGenerateToken -> AccountServices");
     }
 
-
-
-
+    public void getUser(String uuid, String token){
+        Call<Object> getUser = services.getAccount(uuid, token);
+        perform(getUser, true, true, "getUser");
+    }
 }

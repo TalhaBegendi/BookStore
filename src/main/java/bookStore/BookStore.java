@@ -3,6 +3,7 @@ package bookStore;
 import context.TestStore;
 import models.books.Books;
 import models.books.PostBooksModel;
+import okhttp3.Headers;
 import org.junit.Assert;
 import retrofit2.Call;
 import utils.Caller;
@@ -11,7 +12,11 @@ import utils.ServiceGenerator;
 
 public class BookStore extends Caller {
 
-    BookStoreServices services = new ServiceGenerator().generate(BookStoreServices.class);
+    BookStoreServices services = new ServiceGenerator(
+            new Headers.Builder()
+                    .add("Authorization", TestStore.get("basic").toString())
+                    .build())
+            .generate(BookStoreServices.class);
     Printer log = new Printer(BookStore.class);
 
     public Books getBooks() {
@@ -26,9 +31,7 @@ public class BookStore extends Caller {
     }
 
     public PostBooksModel.Isbn postBooks(PostBooksModel books) {
-
-        System.out.println(TestStore.get("basic").toString());
-        Call<PostBooksModel.Isbn> postBooks = services.postBooks(books, TestStore.get("basic").toString());
+        Call<PostBooksModel.Isbn> postBooks = services.postBooks(books);
         return perform(postBooks, false, true, "postBooks -> BookStoreServices");
     }
 }

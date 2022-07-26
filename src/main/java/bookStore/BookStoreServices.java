@@ -9,9 +9,8 @@ public interface BookStoreServices {
 
     String BASE_URL = BookStoreApi.BASE_URL;
 
-
     @POST(BASE_URL + BookStoreApi.BOOK_SUFFIX)
-    Call<PostBooksModel.Isbn> postBooks(@Body PostBooksModel postBooksModel, @Header("Authorization") String basicToken);
+    Call<PostBooksModel.Isbn> postBooks(@Body PostBooksModel postBooksModel);
 
     @PUT(BASE_URL + BookStoreApi.BOOK_SUFFIX )
     Call<Books> putBook(@Body Books book);

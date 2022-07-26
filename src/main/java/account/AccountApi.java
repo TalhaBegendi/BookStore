@@ -9,4 +9,7 @@ public class AccountApi {
     public static final String GENERATE_TOKEN_SUFFIX = "GenerateToken/";
 
     public static final String AUTHORIZED_SUFFIX = "Authorized/";
+
+    public static final String UUID_SUFFIX = "{UUID}";
+
 }
