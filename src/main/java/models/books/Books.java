@@ -4,11 +4,11 @@ import utils.Caller;
 
 public class Books extends Caller {
 
+    Book[] books;
+
     public Book[] getBooks() {
         return books;
     }
-
-    Book[] books;
 
     public static class Book
     {

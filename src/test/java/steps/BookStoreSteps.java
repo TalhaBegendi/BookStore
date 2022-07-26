@@ -4,10 +4,16 @@ import account.Account;
 import bookStore.BookStore;
 import context.TestStore;
 import models.account.AccountCredentials;
+import models.account.AccountModel;
 import models.books.Books;
+import models.books.PostBooksModel;
+import okhttp3.Credentials;
 import org.junit.Before;
 import org.junit.Test;
 import utils.StringUtilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookStoreSteps {
 
@@ -22,20 +28,28 @@ public class BookStoreSteps {
         AccountCredentials accountCredentials = new AccountCredentials();
         accountCredentials.setUserName(strUtils.generateRandomString("talha",10,true,true));
         accountCredentials.setPassword("Talhagebendi3@");
-        account.addAccount(accountCredentials);
+        String basic = Credentials.basic(accountCredentials.getUserName(),accountCredentials.getPassword());
+        TestStore.put("basic",basic);
+        TestStore.put("userId",account.addAccount(accountCredentials).getUserID());
         TestStore.put("token",account.generateToken(accountCredentials).getToken());
     }
 
     @Test
-    public void getBook()
+    public void getBooks()
     {
-        Books books = new Books();
-        bookStore.getBook(books);
+        TestStore.put("books",bookStore.getBooks());
     }
 
     @Test
-    public void bookUpdate()
+    public void postBooks()
     {
-        bookStore.updateBook();
+        PostBooksModel books = new PostBooksModel();
+        books.setUserId(TestStore.get("userId").toString());
+        List<PostBooksModel.Isbn> isbns = new ArrayList<>();
+        Books savedBooks = bookStore.getBooks();
+        isbns.add(new PostBooksModel.Isbn(savedBooks.getBooks()[0].getIsbn()));
+        books.setCollectionOfIsbns(isbns);
+        bookStore.postBooks(books);
+
     }
 }

@@ -13,10 +13,10 @@ public class Account extends Caller {
     AccountServices services = new ServiceGenerator().generate(AccountServices.class);
     Printer log = new Printer(Account.class);
 
-    public void addAccount (AccountCredentials accountCredentials)
+    public AccountModel addAccount (AccountCredentials accountCredentials)
     {
         Call<AccountModel> createAccount = services.createAccount(accountCredentials);
-        AccountModel responseModel = perform(createAccount, false, true, "createAccount -> AccountServices");
+        return perform(createAccount, true, true, "createAccount -> AccountServices");
     }
 
     public GenerateTokenModel generateToken (AccountCredentials accountCredentials)

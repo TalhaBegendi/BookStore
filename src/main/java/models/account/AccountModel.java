@@ -1,10 +1,11 @@
 package models.account;
 
+import models.books.Books;
+
 public class AccountModel {
     String userID;
     String username;
-    Object[] books;
-
+    Books.Book[] books;
 
     public String getUserID() {
         return userID;
@@ -26,7 +27,8 @@ public class AccountModel {
         return books;
     }
 
-    public void setBooks(Object[] books) {
+    public void setBooks(Books.Book[] books) {
         this.books = books;
     }
+
 }
